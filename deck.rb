@@ -51,21 +51,26 @@ class Card
 end
 
 
+def get_deck(bln_shuffle)
 
-deck = [0..51]
-i = 0
+	deck = [0..51]
+	i = 0
 
-for suit in 1..4
-	for number in 1..13
-		deck[i] = Card.new(number, suit)
-		i = i + 1
+	for suit in 1..4
+		for number in 1..13
+			deck[i] = Card.new(number, suit)
+			i = i + 1
+		end
 	end
+	
+	if bln_shuffle == true then
+		deck = deck.shuffle
+	end
+
+	return deck	
+
+	#deck.each do |card|
+	#	puts card.to_string
+	#end
+
 end
-
-deck = deck.shuffle
-
-deck.each do |card|
-	puts card.to_string
-end
-
-
