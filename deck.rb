@@ -1,23 +1,30 @@
 #!/usr/bin/ruby -w
 
+$use_unicode = false
+
 class Card 
-	attr_accessor :number, :face 
+	attr_accessor :number, :suit, :unicode
 	
-	def initialize(number, face)
+	def initialize(number, suit)
 		@number = number
-		@face = face	
+		@suit = suit
+		@unicode = true
 	end
 
-	def to_string
-		suit = ""
-		if face == 1 then
-			suit = "♥"
-		elsif face == 2
-			suit = "♦"
-		elsif face == 3
-			suit = "♠"
-		elsif face == 4
-			suit = "♣"
+	def set_unicode(_unicode)
+		@unicode = _unicode
+	end
+
+	def to_s
+		suit_s = ""
+		if suit == 1 then
+			suit_s = @unicode ? "♥" : "H"
+		elsif suit == 2
+			suit_s = @unicode ? "♦" : "D"
+		elsif suit == 3
+			suit_s = @unicode ? "♠" : "S"
+		elsif suit == 4
+			suit_s = @unicode ? "♣" : "C"
 		end 
 		
 		num_s = ""
@@ -34,7 +41,7 @@ class Card
 			num_s = @number.to_s
 		end
 		
-		return suit + num_s
+		return suit_s + num_s
 
 		
 	end
@@ -43,8 +50,8 @@ class Card
 		@number
 	end
 
-	def self.face
-		@face
+	def self.suit
+		@suit
 	end
 
 	
@@ -59,6 +66,7 @@ def get_deck(bln_shuffle)
 	for suit in 1..4
 		for number in 1..13
 			deck[i] = Card.new(number, suit)
+			deck[i].set_unicode($use_unicode)
 			i = i + 1
 		end
 	end
